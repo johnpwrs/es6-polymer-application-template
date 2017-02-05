@@ -1,0 +1,74 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/app-layout/app-grid/app-grid-style.html">
+
+<dom-module id="main-grid">
+  <template>
+    <style include="app-grid-style">
+      :host {
+        display:block;
+        --app-grid-item-height: 310px;
+        --app-grid-columns: 2;
+        --app-grid-gutter: 5px;
+        --app-grid-expandible-item-columns: 1;
+      }
+
+      .centered-container {
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      ul {
+        margin-top: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .item {
+        background-color: #3F3B36;
+        color: #F4E510;
+      }
+      
+      @media (max-width: 945px) {
+        :host {
+          --app-grid-columns: 1;
+          --app-grid-gutter: 5px;
+          --app-grid-item-height: 310px;
+        }
+        .centered-container {
+        }
+      }
+    </style>
+    <div class="centered-container">
+      <ul class="app-grid"> 
+        <slot id="grid-items"></slot>
+      </ul>
+    </div>
+  </template>
+
+  <script>
+    class MainGrid {
+
+      beforeRegister() {
+        this.is = 'main-grid';
+
+        this.properties = {};
+      }
+      
+      attached() {
+        let updateStyleFn = () => {
+          this.updateStyles();
+        }
+        window.addEventListener('resize', updateStyleFn);
+      }
+
+      detached() {
+        let updateStyleFn = () => {
+          this.updateStyles();
+        }
+        window.removeEventListener('resize', updateStyleFn);
+      } 
+    }
+
+    Polymer(MainGrid);
+  </script>
+</dom-module>
